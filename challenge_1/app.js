@@ -3,20 +3,35 @@ const sideLength = 3;
 
 /* Game state variables and initialization =============*/
 const playerObj = {
-  x: true, // X goes first
-  o: false,
+  x: null, // X goes first
+  o: null,
 };
 const board = {};
+const wins = {
+  x: 0,
+  o: 0
+}
 
 // Sets board to 'false' at every cell
-const initialize = function(board, player) {
+
+const initializeState = function(board, player) {
   for (var i = 0; i < sideLength; i++) {
     for (var j = 0; j < sideLength; j++) {
-      board[`r${i + 1}c${j + 1}`] = false;
+      board[`r${i + 1}c${j + 1}`] = null;
     }
   }
+  player.x = true; // X goes first
+  player.o = false;
 }
-initialize(board, playerObj);
+initializeState(board, playerObj);
+
+const newBoard = function() {
+  initializeState(board, playerObj);
+  renderTable();
+  // remove win message
+  const header = document.getElementsByClassName('win');
+  header[0].innerHTML = '';
+}
 
 /* Game state helper functions  ========================*/
 
@@ -44,6 +59,11 @@ const updateBoard = function(DOMelem, player) {
   board[DOMelem.id] = player;
 }
 
+const incrementWins = function(player) {
+  wins[player.toLowerCase()]++;
+  console.log(wins);
+}
+
 /* Create tic tac toe html table ===================*/
 
 // Renders square table of specified sideLength
@@ -51,6 +71,9 @@ const updateBoard = function(DOMelem, player) {
 const renderTable = function() {
   const tables = document.getElementsByTagName('table');
   const table = tables[0];
+  if (table.hasChildNodes) { // if cells exist, overwrite
+    table.innerHTML = '';
+  }
   for (let i = 0; i < sideLength; i++) {
     const row = document.createElement('tr');
     table.appendChild(row);
@@ -74,14 +97,21 @@ table[0].addEventListener('click', (event) => {
         updateBoard(event.target, currPlayer);
         if (isWin()) {
           renderWinMessage(currPlayer);
+          incrementWins(currPlayer);
         }
       }
     }
 });
 
-// On reset button click, refresh page
-const button = document.getElementsByTagName('button');
-button[0].addEventListener('click', (event) => {
+// On reset game button click, refresh page
+const boardButton = document.getElementsByClassName('board');
+boardButton[0].addEventListener('click', (event) => {
+  newBoard();
+});
+
+// On reset game button click, refresh page
+const gameButton = document.getElementsByClassName('game');
+gameButton[0].addEventListener('click', (event) => {
   window.location.reload();
 });
 
