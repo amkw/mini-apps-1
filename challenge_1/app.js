@@ -37,6 +37,14 @@ const renderWinMessage = function(player) {
   header[0].innerHTML = `Player ${player} is the winner!`;
 }
 
+// method updates both the DOM and app.js board state
+// input: DOM element (clicked by user), currPlayer
+const updateBoard = function(DOMelem, player) {
+  DOMelem.innerHTML = player;
+  board[DOMelem.id] = player;
+  console.log('board', board)
+}
+
 /* Create tic tac toe html table ===================*/
 
 // Renders square table of specified sideLength
@@ -64,8 +72,9 @@ table[0].addEventListener('click', (event) => {
   if (event.target.innerHTML === '') { // space not used yet
       if (!isWin()) {
         currPlayer = getPlayer(playerObj);
-        event.target.innerHTML = currPlayer;
-        board[event.target.id] = true;
+        updateBoard(event.target, currPlayer);
+        // event.target.innerHTML = currPlayer;
+        // board[event.target.id] = true;
         if (isWin()) {
           renderWinMessage(currPlayer);
         }
