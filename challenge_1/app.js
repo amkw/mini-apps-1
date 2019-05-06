@@ -8,6 +8,8 @@ const playerObj = {
 };
 const board = {};
 
+/* Game state helps functions  =========================*/
+
 // Sets board to 'false' at every cell
 var initialize = function(board, player) {
   for (var i = 0; i < sideLength; i++) {
@@ -31,20 +33,32 @@ var getPlayer = function(obj) {
 }
 
 // Add click event listeners to tic tac toe table
-const cells = document.getElementsByTagName('td');
-
-for (let cell of cells) {
-  cell.addEventListener('click', (event) => {
-    if (cell.innerHTML === '') { // space not used yet
+const table = document.getElementsByTagName('table');
+table[0].addEventListener('click', (event) => {
+  if (event.target.innerHTML === '') { // space not used yet
       if (!isWin()) {
-        cell.innerHTML = getPlayer(playerObj);
+        event.target.innerHTML = getPlayer(playerObj);
+        board[event.target.id] = true;
         if (isWin()) {
           alert('Winner!');
         }
       }
     }
-  });
-}
+});
+// const cells = document.getElementsByTagName('td');
+
+// for (let cell of cells) {
+//   cell.addEventListener('click', (event) => {
+//     if (cell.innerHTML === '') { // space not used yet
+//       if (!isWin()) {
+//         cell.innerHTML = getPlayer(playerObj);
+//         if (isWin()) {
+//           alert('Winner!');
+//         }
+//       }
+//     }
+//   });
+// }
 
 /* Win Logic ======================================*/
 
