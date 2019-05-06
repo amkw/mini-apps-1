@@ -1,14 +1,12 @@
 /* Game configuration variables ========================*/
 const sideLength = 3;
 
-/* Game state variables  ===============================*/
+/* Game state variables and initialization =============*/
 const playerObj = {
   x: true, // X goes first
   o: false,
 };
 const board = {};
-
-/* Game state helper functions  ========================*/
 
 // Sets board to 'false' at every cell
 const initialize = function(board, player) {
@@ -19,6 +17,8 @@ const initialize = function(board, player) {
   }
 }
 initialize(board, playerObj);
+
+/* Game state helper functions  ========================*/
 
 const getPlayer = function(obj) {
   let currPlayer;
@@ -42,7 +42,6 @@ const renderWinMessage = function(player) {
 const updateBoard = function(DOMelem, player) {
   DOMelem.innerHTML = player;
   board[DOMelem.id] = player;
-  console.log('board', board)
 }
 
 /* Create tic tac toe html table ===================*/
@@ -73,8 +72,6 @@ table[0].addEventListener('click', (event) => {
       if (!isWin()) {
         currPlayer = getPlayer(playerObj);
         updateBoard(event.target, currPlayer);
-        // event.target.innerHTML = currPlayer;
-        // board[event.target.id] = true;
         if (isWin()) {
           renderWinMessage(currPlayer);
         }
@@ -93,25 +90,13 @@ button[0].addEventListener('click', (event) => {
 const isWin = function() {
   let x = 0;
   let o = 0;
-  let counter = 0;
-  const cellObj = {};
-
-  const cells = document.getElementsByTagName('td');
-
-  // for (let cell of cells) {
-  for (var i = 0; i < sideLength; i++) {
-    for (var j = 0; j < sideLength; j++) {
-        cellObj[`r${i+1}c${j+1}`] = cells[counter];
-        counter++;
-      }
-    }
 
   // check rows
   for (var i = 0; i < sideLength; i++) {
     for (var j = 0; j < sideLength; j++) {
-      if (cellObj[`r${i + 1}c${j + 1}`].innerHTML === 'X') {
+      if (board[`r${i + 1}c${j + 1}`] === 'X') {
         x++;
-      } else if (cellObj[`r${i + 1}c${j + 1}`].innerHTML === 'O') {
+      } else if (board[`r${i + 1}c${j + 1}`] === 'O') {
         o++;
       }
     }
@@ -122,12 +107,12 @@ const isWin = function() {
       o = 0;
     }
   }
-  // check cols
+  // check columns
   for (var i = 0; i < sideLength; i++) {
     for (var j = 0; j < sideLength; j++) {
-      if (cellObj[`r${j + 1}c${i + 1}`].innerHTML === 'X') {
+      if (board[`r${j + 1}c${i + 1}`] === 'X') {
         x++;
-      } else if (cellObj[`r${j + 1}c${i + 1}`].innerHTML === 'O') {
+      } else if (board[`r${j + 1}c${i + 1}`] === 'O') {
         o++;
       }
     }
@@ -139,11 +124,11 @@ const isWin = function() {
     }
   }
 
-  // check diags
+  // check diagonals
   for (var i = 0; i < sideLength; i++) {
-      if (cellObj[`r${i + 1}c${i + 1}`].innerHTML === 'X') {
+      if (board[`r${i + 1}c${i + 1}`] === 'X') {
         x++;
-      } else if (cellObj[`r${i + 1}c${i + 1}`].innerHTML === 'O') {
+      } else if (board[`r${i + 1}c${i + 1}`] === 'O') {
         o++;
       }
   }
