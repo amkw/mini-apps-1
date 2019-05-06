@@ -8,7 +8,6 @@ const cells = document.getElementsByTagName('td');
 
 for (let cell of cells) {
   cell.addEventListener('click', (event) => {
-    console.log('clicked');
     // toggle X vs O
     if (cell.innerHTML === '_____') { // space not used yet
       if(player1) {
@@ -99,3 +98,9 @@ const isWin = function() {
 
   return false;
 };
+
+// Reset game
+const button = document.getElementsByTagName('button');
+button[0].addEventListener('click', (event) => {
+  window.location.reload();
+});
