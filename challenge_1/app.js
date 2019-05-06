@@ -32,6 +32,11 @@ const getPlayer = function(obj) {
   return currPlayer;
 }
 
+const renderWinMessage = function(player) {
+  const header = document.getElementsByClassName('win');
+  header[0].innerHTML = `Player ${player} is the winner!`;
+}
+
 /* Create tic tac toe html table ===================*/
 
 // Renders square table of specified sideLength
@@ -58,10 +63,11 @@ const table = document.getElementsByTagName('table');
 table[0].addEventListener('click', (event) => {
   if (event.target.innerHTML === '') { // space not used yet
       if (!isWin()) {
-        event.target.innerHTML = getPlayer(playerObj);
+        currPlayer = getPlayer(playerObj);
+        event.target.innerHTML = currPlayer;
         board[event.target.id] = true;
         if (isWin()) {
-          alert('Winner!');
+          renderWinMessage(currPlayer);
         }
       }
     }
