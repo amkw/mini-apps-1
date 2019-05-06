@@ -8,10 +8,10 @@ const playerObj = {
 };
 const board = {};
 
-/* Game state helps functions  =========================*/
+/* Game state helper functions  ========================*/
 
 // Sets board to 'false' at every cell
-var initialize = function(board, player) {
+const initialize = function(board, player) {
   for (var i = 0; i < sideLength; i++) {
     for (var j = 0; j < sideLength; j++) {
       board[`r${i + 1}c${j + 1}`] = false;
@@ -20,7 +20,7 @@ var initialize = function(board, player) {
 }
 initialize(board, playerObj);
 
-var getPlayer = function(obj) {
+const getPlayer = function(obj) {
   let currPlayer;
   if (obj.x) {
     currPlayer = 'X';
@@ -32,7 +32,28 @@ var getPlayer = function(obj) {
   return currPlayer;
 }
 
-// Add click event listeners to tic tac toe table
+/* Create tic tac toe html table ===================*/
+
+// Renders square table of specified sideLength
+// Each cell has id tag specifying row, col in form r?c?
+const renderTable = function() {
+  const tables = document.getElementsByTagName('table');
+  const table = tables[0];
+  for (let i = 0; i < sideLength; i++) {
+    const row = document.createElement('tr');
+    table.appendChild(row);
+    for (let j = 0; j < sideLength; j++) {
+      const cell = document.createElement('td');
+      cell.setAttribute('id', `r${i + 1}c${j + 1}`);
+      row.appendChild(cell);
+    }
+  }
+}
+renderTable();
+
+/* Event Listeners =================================*/
+
+// On table click, update cell, if valid
 const table = document.getElementsByTagName('table');
 table[0].addEventListener('click', (event) => {
   if (event.target.innerHTML === '') { // space not used yet
@@ -45,20 +66,12 @@ table[0].addEventListener('click', (event) => {
       }
     }
 });
-// const cells = document.getElementsByTagName('td');
 
-// for (let cell of cells) {
-//   cell.addEventListener('click', (event) => {
-//     if (cell.innerHTML === '') { // space not used yet
-//       if (!isWin()) {
-//         cell.innerHTML = getPlayer(playerObj);
-//         if (isWin()) {
-//           alert('Winner!');
-//         }
-//       }
-//     }
-//   });
-// }
+// On reset button click, refresh page
+const button = document.getElementsByTagName('button');
+button[0].addEventListener('click', (event) => {
+  window.location.reload();
+});
 
 /* Win Logic ======================================*/
 
@@ -128,9 +141,3 @@ const isWin = function() {
 
   return false;
 };
-
-/* Reset Game ======================================*/
-const button = document.getElementsByTagName('button');
-button[0].addEventListener('click', (event) => {
-  window.location.reload();
-});
