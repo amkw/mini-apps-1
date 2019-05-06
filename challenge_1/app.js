@@ -1,33 +1,52 @@
-// Variable that tracks whether current turn is for player1
-let player1 = true;
+/* Game configuration variables ========================*/
+const sideLength = 3;
+
+/* Game state variables  ===============================*/
+const playerObj = {
+  x: true, // X goes first
+  o: false,
+};
+const board = {};
+
+// Sets board to 'false' at every cell
+var initialize = function(board, player) {
+  for (var i = 0; i < sideLength; i++) {
+    for (var j = 0; j < sideLength; j++) {
+      board[`r${i + 1}c${j + 1}`] = false;
+    }
+  }
+}
+initialize(board, playerObj);
+
+var getPlayer = function(obj) {
+  let currPlayer;
+  if (obj.x) {
+    currPlayer = 'X';
+  } else {
+    currPlayer = 'O';
+  }
+  obj.x = !obj.x;
+  obj.o = !obj.o;
+  return currPlayer;
+}
 
 // Add click event listeners to tic tac toe table
 const cells = document.getElementsByTagName('td');
 
 for (let cell of cells) {
   cell.addEventListener('click', (event) => {
-    // toggle X vs O
     if (cell.innerHTML === '') { // space not used yet
-      if(player1) {
-        if (!isWin()) {
-          cell.innerHTML = 'X';
-          player1 = !player1;
-          if (isWin()) {
-            alert('Winner!');
-          }
-        }
-      } else {
-        if (!isWin()) {
-          cell.innerHTML = 'O';
-          player1 = !player1;
-          if (isWin()) {
-            alert('Winner!');
-          }
+      if (!isWin()) {
+        cell.innerHTML = getPlayer(playerObj);
+        if (isWin()) {
+          alert('Winner!');
         }
       }
     }
   });
 }
+
+/* Win Logic ======================================*/
 
 const isWin = function() {
   let x = 0;
@@ -36,7 +55,6 @@ const isWin = function() {
   const cellObj = {};
 
   const cells = document.getElementsByTagName('td');
-  const sideLength = 3;
 
   // for (let cell of cells) {
   for (var i = 0; i < sideLength; i++) {
@@ -97,7 +115,7 @@ const isWin = function() {
   return false;
 };
 
-// Reset game
+/* Reset Game ======================================*/
 const button = document.getElementsByTagName('button');
 button[0].addEventListener('click', (event) => {
   window.location.reload();
