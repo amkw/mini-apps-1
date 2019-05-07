@@ -61,6 +61,8 @@ const updateBoard = function(DOMelem, player) {
 
 const incrementWins = function(player) {
   wins[player.toLowerCase()]++;
+  const header = document.getElementsByClassName('tally');
+  header[0].innerHTML = `Player X has ${wins.x} wins. \n Player O has ${wins.o} wins.`;
   console.log(wins);
 }
 

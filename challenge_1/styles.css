@@ -18,3 +18,8 @@ td {
 button {
   margin: 30px 0;
 }
+
+/* Header Styles ======================================*/
+h3 {
+  height: 50px;
+}
