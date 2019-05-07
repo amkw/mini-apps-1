@@ -62,8 +62,7 @@ const updateBoard = function(DOMelem, player) {
 const incrementWins = function(player) {
   wins[player.toLowerCase()]++;
   const header = document.getElementsByClassName('tally');
-  header[0].innerHTML = `Player X has ${wins.x} wins. \n Player O has ${wins.o} wins.`;
-  console.log(wins);
+  header[0].innerHTML = `Player X has ${wins.x} wins. <br> Player O has ${wins.o} wins.`;
 }
 
 /* Create tic tac toe html table ===================*/
@@ -163,6 +162,19 @@ const isWin = function() {
       } else if (board[`r${i + 1}c${i + 1}`] === 'O') {
         o++;
       }
+  }
+  if (x === sideLength || o === sideLength) {
+    return true;
+  } else {
+    x = 0;
+    o = 0;
+  }
+  for (var i = 0; i < sideLength; i++) {
+    if (board[`r${i + 1}c${sideLength-i}`] === 'X') {
+      x++;
+    } else if (board[`r${i + 1}c${sideLength - i}`] === 'O') {
+      o++;
+    }
   }
   if (x === sideLength || o === sideLength) {
     return true;
