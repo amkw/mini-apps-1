@@ -1,5 +1,6 @@
 var parse = require('./parseJSON.js').parse;
 var fs = require('fs');
+// var html = require('./client/index.html');
 
 var express = require('express');
 var app = express();
@@ -17,6 +18,10 @@ app.post('/', (req, res) => {
     if (err) throw err;
     flattened = parse(JSON.parse(data.toString()));
     console.log(flattened);
+    res.send(`<form action='/' method='post'>
+      <input type="file" class="file" /><br>
+      <input type='submit' value='submit'>
+    </form><br>${flattened}`);
     res.end();
   });
 });

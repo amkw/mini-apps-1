@@ -24,7 +24,7 @@ var flattenJSON = function(obj) {
   properties.push(getKeys(obj));
   flattenRecurse(obj, csv, properties);
 
-  return csv.join("\n");
+  return csv.join('</br>');
 }
 
 var getKeys = function(obj) {
