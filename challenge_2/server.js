@@ -1,4 +1,5 @@
 var parse = require('./parseJSON.js').parse;
+var fs = require('fs');
 
 var express = require('express');
 var app = express();
@@ -11,19 +12,13 @@ app.use(express.json());
 
 app.post('/', (req, res) => {
   console.log('POST request to /')
-  let body = [];
-  req.on('data', (chunk) => {
-    body.push(chunk);
-  }).on('end', () => {
-    let buf = Buffer.concat(body).toString();
-    // let json = buf.toJSON();
-    console.log('buf', buf);
-  })
-    // at this point, `body` has the entire request body stored in it as a string
-  // var flattened = parse(req.body);
-  // console.log(flattened);
-  // res.sendFile('index.html');
-  res.end();
+  var flattened = '';
+  fs.readFile('./samples/sales_report.json', (err, data) => {
+    if (err) throw err;
+    flattened = parse(JSON.parse(data.toString()));
+    console.log(flattened);
+    res.end();
+  });
 });
 
 app.listen(port);
