@@ -1,9 +1,29 @@
-// The server must flatten the JSON hierarchy, mapping each item / object in the JSON to a single line of CSV report(see included sample output), where the keys of the JSON objects will be the columns of the CSV report.
-// You may assume the JSON data has a regular structure and hierarchy(see included sample file).In other words, all sibling records at a particular level of the hierarchy will have the same set of properties, but child objects might not contain the same properties.In all cases, every property you encounter must be present in the final CSV output.
-// You may also assume that child records in the JSON will always be in a property called`children`.
+var parse = require('./parseJSON.js').parse;
+
 var express = require('express');
 var app = express();
+var port = 5501;
 
 // Tell express to serve up files in client folder
 // Default: looks for index.html file
 app.use(express.static('client'));
+app.use(express.json());
+
+app.post('/', (req, res) => {
+  console.log('POST request to /')
+  let body = [];
+  req.on('data', (chunk) => {
+    body.push(chunk);
+  }).on('end', () => {
+    let buf = Buffer.concat(body).toString();
+    // let json = buf.toJSON();
+    console.log('buf', buf);
+  })
+    // at this point, `body` has the entire request body stored in it as a string
+  // var flattened = parse(req.body);
+  // console.log(flattened);
+  // res.sendFile('index.html');
+  res.end();
+});
+
+app.listen(port);
