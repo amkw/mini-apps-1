@@ -5,14 +5,18 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js babel ./node_modules/.bin/babel client --out-dir public --presets @babel/preset-react --source-maps inline . --watch"
+    "start": "nodemon server.js",
+    "babel": "./node_modules/.bin/babel client --out-dir public --presets @babel/preset-react --source-maps inline --watch"
   },
   "author": "Alyssa Wei",
   "license": "UNLICENSED",
   "dependencies": {
     "@babel/cli": "^7.4.4",
     "@babel/core": "^7.4.4",
+    "@babel/preset-env": "^7.4.3",
     "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.5",
+    "babel-upgrade": "^1.0.1",
     "express": "^4.16.4",
     "nodemon": "^1.19.0"
   }
