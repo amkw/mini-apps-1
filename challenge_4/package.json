@@ -1,0 +1,24 @@
+{
+  "name": "challenge_4",
+  "version": "1.0.0",
+  "description": "single-page app implementation of the game Connect Four",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Alyssa Wei",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.4",
+    "@babel/preset-env": "^7.4.4",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.5",
+    "express": "^4.16.4",
+    "fs": "0.0.1-security",
+    "mysql": "^2.17.1",
+    "nodemon": "^1.19.0",
+    "path": "^0.12.7"
+  }
+}
