@@ -1,11 +1,76 @@
-var App = () => (
-  <div>
-    <button id='checkout'>Checkout Now!</button>
-    < F1 />
-    < F2 />
-    < F3 />
-  </div>
-);
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      page: 'home'
+    };
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleSubmit(event) {
+    if (this.state.page === 'home') {
+      this.setState({ page: 'F1' });
+    } else if (this.state.page === 'F1') {
+      this.setState({ page: 'F2' });
+    } else if (this.state.page === 'F2') {
+      this.setState({ page: 'F3' });
+    } else if (this.state.page === 'F3') {
+      this.setState({ page: 'confirmation' });
+    } else if (this.state.page === 'confirmation') {
+      this.setState({ page: 'home' });
+    }
+    event.preventDefault();
+  }
+
+  render() {
+    if (this.state.page === 'home') {
+      return (
+        <div>
+          <form onSubmit={this.handleSubmit}>
+            <input type='submit' value='Checkout' />
+          </form>
+        </div>
+      )
+    } else if (this.state.page === 'F1') {
+      return (
+        <div>
+          < F1 />
+          <form onSubmit={this.handleSubmit}>
+            <input type='submit' value='Next' />
+          </form>
+        </div>
+      )
+    } else if (this.state.page === 'F2') {
+      return (
+        <div>
+          < F2 />
+          <form onSubmit={this.handleSubmit}>
+            <input type='submit' value='Next' />
+          </form>
+        </div>
+      )
+    } else if (this.state.page === 'F3') {
+      return (
+        <div>
+          < F3 />
+          <form onSubmit={this.handleSubmit}>
+            <input type='submit' value='Next' />
+          </form>
+        </div>
+      )
+    } else if (this.state.page === 'confirmation') {
+      return (
+        <div>
+          <h3>Grab data from DB</h3>
+          <form onSubmit={this.handleSubmit}>
+            <input type='submit' value='Confirm' />
+          </form>
+        </div>
+      )
+    }
+  }
+};
 
 class F1 extends React.Component {
   constructor(props) {
@@ -14,7 +79,7 @@ class F1 extends React.Component {
     this.state = {
       name: '',
       email: '',
-      password: ''
+      password: '',
     };
 
     this.handleName = this.handleName.bind(this);
@@ -42,9 +107,10 @@ class F1 extends React.Component {
 
 
   render() {
+    console.log(this.props);
     return (
       <div>
-        <h1>Create an account!</h1>
+        <h1>Create an Account</h1>
 
         <form onSubmit={this.handleSubmit}>
           <label>
@@ -59,7 +125,7 @@ class F1 extends React.Component {
             Password:
             <input type='password' value={this.state.password} onChange={this.handlePassword} />
           </label> <br />
-          <input type='submit' value='next' />
+          {/* <input type='submit' value='next' /> */}
         </form>
       </div>
     )
@@ -148,7 +214,7 @@ class F2 extends React.Component {
             Phone Number:
             <input type='text' value={this.state.phone} onChange={this.handlePhone} />
           </label> <br />
-          <input type='submit' value='next' />
+          {/* <input type='submit' value='next' /> */}
         </form>
       </div>
     )
@@ -217,7 +283,7 @@ class F3 extends React.Component {
             Zip Code:
             <input type='number' value={this.state.zip} onChange={this.handleZip} />
           </label> <br />
-          <input type='submit' value='next'/>
+          {/* <input type='submit' value='next'/> */}
         </form>
       </div>
     )}
